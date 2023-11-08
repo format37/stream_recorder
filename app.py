@@ -18,7 +18,7 @@ def record_stream(segment_duration=600):  # segment_duration is in seconds (10 m
 
     # Create data/audio/{project} directory if it doesn't exist
     project = os.environ.get('PROJECT')
-    os.makedirs(f"data/audio/{project}", exist_ok=True)1
+    os.makedirs(f"data/audio/{project}", exist_ok=True)
 
     # Start recording and segmenting the stream
     while True:
