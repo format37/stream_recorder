@@ -13,29 +13,17 @@ def record_stream(segment_duration=600):  # segment_duration is in seconds (10 m
     logger.info("Recording started.")
     streamlink_cmd = "streamlink https://www.1tv.ru/live best -O"
     
-    # Define the FFmpeg command to extract audio and split it into segments
-    # ffmpeg_cmd = ("ffmpeg -i pipe:0 -f segment -segment_time {duration} "
-    #               "-c copy -vn -strftime 1 'output_%Y-%m-%d_%H-%M-%S.mp3'").format(duration=segment_duration)
-    # Create data/audio/{project} directory if it doesn't exist
     project = os.environ.get('PROJECT')
     os.makedirs(f"data/audio/{project}", exist_ok=True)
 
     # Get the current Unix timestamp
     timestamp = int(time.time())
-    """file_path = f"data/audio/{project}/{timestamp}.mp3"
-    ffmpeg_cmd = ("ffmpeg -i pipe:0 -f segment -segment_time {duration} "
-              "-vn -ar 44100 -ac 2 -b:a 192k -strftime 1 'data/audio/output_%Y-%m-%d_%H-%M-%S.mp3'").format(duration=segment_duration)"""
-    
-    # savethe empty text file to 'data/audio/{project}/{timestamp}.txt'
-    file_path = f"data/audio/{project}/{timestamp}.txt"
-    with open(file_path, 'w') as f:
-        f.write('')
-    exit()
-    
-    ffmpeg_cmd = ("ffmpeg -i pipe:0 -f segment -segment_time {duration} "
-                "-vn -ar 44100 -ac 2 -b:a 192k "
-                "'data/audio/{project}/{timestamp}.mp3'").format(duration=segment_duration, timestamp=timestamp, project=project)
 
+    # Define the FFmpeg command to extract audio and split it into segments
+    
+    ffmpeg_cmd = ("ffmpeg -i pipe:0 -f segment -segment_time {duration} "
+                "-vn -ar 44100 -ac 2 -b:a 192k -strftime 1 "
+                "'data/audio/{project}/{timestamp}.mp3'").format(duration=segment_duration, timestamp=timestamp, project=project)
     
     # Start the Streamlink process
     streamlink_process = subprocess.Popen(shlex.split(streamlink_cmd), stdout=subprocess.PIPE)
