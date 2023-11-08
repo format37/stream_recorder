@@ -23,7 +23,8 @@ def record_stream(segment_duration=600):  # segment_duration is in seconds (10 m
     
     ffmpeg_cmd = ("ffmpeg -i pipe:0 -f segment -segment_time {duration} "
                 "-vn -ar 44100 -ac 2 -b:a 192k -strftime 1 "
-                "'data/audio/{project}/{timestamp}.mp3'").format(duration=segment_duration, timestamp=timestamp, project=project)
+                "'data/audio/{project}/{timestamp}_%03d.mp3'").format(duration=segment_duration, timestamp=timestamp, project=project)
+               #"'data/audio/{project}/{timestamp}.mp3'").format(duration=segment_duration, timestamp=timestamp, project=project)
     
     # Start the Streamlink process
     streamlink_process = subprocess.Popen(shlex.split(streamlink_cmd), stdout=subprocess.PIPE)
