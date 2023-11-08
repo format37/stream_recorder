@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  stream_recorder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: stream_recorder
+    volumes:
+      - /root/projects/streams:/app/data
+    tty: true
